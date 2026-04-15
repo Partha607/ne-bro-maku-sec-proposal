@@ -3,125 +3,138 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Self-Hosted Tech Plan: NE Brothers / MAKU Security</title>
+  <title>Project Docs: NE Brothers / MAKU Security</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     html { scroll-behavior: smooth; }
-    body { background: #f0f4f8; }
-    .glass-header { 
-      background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
-      color: white;
-    }
-    .card { 
-      background: white; 
-      border: 1px solid rgba(15,23,42,0.05); 
-      box-shadow: 0 4px 20px rgba(0,0,0,0.03); 
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
-    .card:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 10px 25px rgba(0,0,0,0.08);
-    }
-    .gradient-text {
-      background: linear-gradient(90deg, #2563eb, #059669);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
+    body { background: #f0f4f8; transition: background 0.3s ease; }
+    
+    /* Utility */
+    .hidden-view { display: none !important; }
+
+    /* Tech Plan Styles */
+    .glass-header { background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%); color: white; }
+    .card { background: white; border: 1px solid rgba(15,23,42,0.05); box-shadow: 0 4px 20px rgba(0,0,0,0.03); transition: transform 0.2s ease, box-shadow 0.2s ease; }
+    .card:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(0,0,0,0.08); }
+    .gradient-text { background: linear-gradient(90deg, #2563eb, #059669); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+
+    /* SRS Styles */
+    .nav-link { transition: all 0.2s ease-in-out; }
+    .nav-link:hover { color: #2563eb; transform: translateX(4px); }
+    .feature-card { background: white; border-radius: 1rem; border: 1px solid #e2e8f0; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); margin-bottom: 2rem; overflow: hidden; }
+    .feature-header { padding: 1.25rem 1.5rem; border-bottom: 1px solid #e2e8f0; display: flex; align-items: center; gap: 0.75rem; font-weight: 700; font-size: 1.25rem; }
+    .feature-body { padding: 1.5rem; }
+    .data-flow-box { background: #0f172a; color: #38bdf8; padding: 1rem; border-radius: 0.5rem; font-family: monospace; font-size: 0.875rem; overflow-x: auto; white-space: nowrap; }
+    .flow-arrow { color: #64748b; margin: 0 0.5rem; }
+    .badge { display: inline-flex; align-items: center; padding: 0.125rem 0.625rem; border-radius: 9999px; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
+    
+    .role-mobile { background: #eff6ff; color: #1d4ed8; border-color: #bfdbfe; }
+    .role-web { background: #ecfdf5; color: #047857; border-color: #a7f3d0; }
+    .role-admin { background: #faf5ff; color: #7e22ce; border-color: #e9d5ff; }
+    .role-client { background: #fff7ed; color: #c2410c; border-color: #fed7aa; }
   </style>
 </head>
 <body class="text-slate-800 font-sans antialiased">
 
-  <!-- Header Section -->
-  <header class="glass-header px-6 md:px-12 pt-16 pb-20">
-    <div class="max-w-6xl mx-auto">
-      <div class="flex items-center gap-3 mb-6">
-        <span class="px-3 py-1 text-xs font-bold uppercase tracking-wider bg-white/20 rounded-full">Revised Strategy</span>
-        <span class="px-3 py-1 text-xs font-bold uppercase tracking-wider bg-orange-500/80 rounded-full">AWS Cloud</span>
-      </div>
-      <h1 class="text-4xl md:text-5xl font-extrabold leading-tight mb-4">
-        AWS Optimized Architecture <br/>
-        <span class="text-blue-200">NE Brothers / MAKU Security</span>
-      </h1>
-      <p class="text-lg text-blue-100 max-w-2xl mb-8">
-        An updated technical execution plan utilizing Amazon Web Services (AWS). By strategically leveraging the AWS Free Tier (EC2, RDS, S3), we maintain a robust cloud infrastructure while still executing the Phase 1 MVP under <strong>₹75,000</strong> to guarantee a >50% profit margin.
-      </p>
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <div class="bg-white/10 p-4 rounded-xl backdrop-blur-sm border border-white/10">
-          <div class="text-3xl font-bold">₹60k</div>
-          <div class="text-xs text-blue-200 uppercase tracking-wide mt-1">Exec. Cost</div>
+  <!-- ============================================================== -->
+  <!-- VIEW 1: TECH PLAN                                              -->
+  <!-- ============================================================== -->
+  <div id="tech-plan-view" class="w-full">
+    <!-- Header Section -->
+    <header class="glass-header px-6 md:px-12 pt-16 pb-20">
+      <div class="max-w-6xl mx-auto">
+        <h1 class="text-4xl md:text-5xl font-extrabold leading-tight mb-4">
+          AWS Optimized Architecture <br/>
+          <span class="text-blue-200">NE Brothers / MAKU Security</span>
+        </h1>
+        <p class="text-lg text-blue-100 max-w-2xl mb-6">
+          By strategically leveraging the AWS Free Tier and Laravel's server-rendered web panels, we execute the Phase 1 MVP under <strong>₹60,000</strong>.
+        </p>
+        
+        <!-- LINK TO SRS -->
+        <div class="mb-10">
+          <button onclick="window.location.href='srs.html'" class="inline-flex items-center gap-2 px-6 py-3 bg-emerald-500 hover:bg-emerald-400 text-white font-bold rounded-full transition shadow-lg hover:scale-105">
+            Go to SRS Document <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+          </button>
         </div>
-        <div class="bg-white/10 p-4 rounded-xl backdrop-blur-sm border border-white/10">
-          <div class="text-3xl font-bold text-emerald-400">60%</div>
-          <div class="text-xs text-blue-200 uppercase tracking-wide mt-1">Saved Buffer</div>
-        </div>
-        <div class="bg-white/10 p-4 rounded-xl backdrop-blur-sm border border-white/10">
-          <div class="text-3xl font-bold">Laravel</div>
-          <div class="text-xs text-blue-200 uppercase tracking-wide mt-1">Backend</div>
-        </div>
-        <div class="bg-white/10 p-4 rounded-xl backdrop-blur-sm border border-white/10">
-          <div class="text-3xl font-bold">AWS RDS</div>
-          <div class="text-xs text-blue-200 uppercase tracking-wide mt-1">Database</div>
-        </div>
-      </div>
-    </div>
-  </header>
 
-  <main class="max-w-6xl mx-auto px-6 md:px-12 py-12 -mt-10 relative z-10 space-y-12">
-    
-    <!-- Stack Section -->
-    <section class="card rounded-2xl p-8 md:p-10">
-      <div class="text-sm font-bold text-blue-600 uppercase tracking-widest mb-2">1. Optimized Tech Stack</div>
-      <h2 class="text-3xl font-bold mb-6">AWS Cloud, Monolithic & Cost-Effective</h2>
-      <p class="text-slate-600 mb-8">To maintain the low budget while shifting to AWS, we must utilize the AWS 12-Month Free Tier. We will deploy a Laravel (PHP) application on EC2, connecting to a managed PostgreSQL/MySQL RDS instance, and store heavy images in S3.</p>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div class="bg-white/10 p-4 rounded-xl backdrop-blur-sm border border-white/10">
+            <div class="text-3xl font-bold">₹60k</div>
+            <div class="text-xs text-blue-200 uppercase tracking-wide mt-1">Exec. Cost</div>
+          </div>
+          <div class="bg-white/10 p-4 rounded-xl backdrop-blur-sm border border-white/10">
+            <div class="text-3xl font-bold text-emerald-400">60%</div>
+            <div class="text-xs text-blue-200 uppercase tracking-wide mt-1">Saved Buffer</div>
+          </div>
+          <div class="bg-white/10 p-4 rounded-xl backdrop-blur-sm border border-white/10">
+            <div class="text-3xl font-bold">Laravel</div>
+            <div class="text-xs text-blue-200 uppercase tracking-wide mt-1">Backend</div>
+          </div>
+          <div class="bg-white/10 p-4 rounded-xl backdrop-blur-sm border border-white/10">
+            <div class="text-3xl font-bold">AWS RDS</div>
+            <div class="text-xs text-blue-200 uppercase tracking-wide mt-1">Database</div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main class="max-w-6xl mx-auto px-6 md:px-12 py-12 -mt-10 relative z-10 space-y-12">
       
-      <div class="grid md:grid-cols-3 gap-6">
-        <div class="bg-slate-50 p-6 rounded-xl border border-slate-100">
-          <div class="w-10 h-10 bg-blue-100 text-blue-600 rounded-lg flex items-center justify-center mb-4">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>
+      <!-- Stack Section -->
+      <section class="card rounded-2xl p-8 md:p-10">
+        <div class="text-sm font-bold text-blue-600 uppercase tracking-widest mb-2">1. Optimized Tech Stack</div>
+        <h2 class="text-3xl font-bold mb-6">AWS Cloud, Monolithic & Cost-Effective</h2>
+        <p class="text-slate-600 mb-8">To maintain the low budget, we must utilize the AWS 12-Month Free Tier. We will deploy a Laravel (PHP) application on EC2, connecting to a managed PostgreSQL/MySQL RDS instance, and store heavy images in S3.</p>
+        
+        <div class="grid md:grid-cols-3 gap-6">
+          <div class="bg-slate-50 p-6 rounded-xl border border-slate-100">
+            <div class="w-10 h-10 bg-blue-100 text-blue-600 rounded-lg flex items-center justify-center mb-4">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>
+            </div>
+            <h3 class="text-xl font-bold mb-2">Frontend (Mobile + Web)</h3>
+            <p class="text-sm text-slate-600 mb-3"><strong>Flutter (Mobile) + Laravel Blade (Web)</strong></p>
+            <ul class="text-sm text-slate-500 space-y-2 list-disc pl-4">
+              <li>Flutter handles the Android App for Employees (Native GPS/Camera).</li>
+              <li>Laravel Blade (Server-Side) renders Admin, Client, <strong>and Employee Web Panels</strong>.</li>
+              <li>Massive reduction in development time and complexity.</li>
+            </ul>
           </div>
-          <h3 class="text-xl font-bold mb-2">Frontend (Mobile + Web)</h3>
-          <p class="text-sm text-slate-600 mb-3"><strong>Flutter (Mobile) + Laravel Blade (Web)</strong></p>
-          <ul class="text-sm text-slate-500 space-y-2 list-disc pl-4">
-            <li>Flutter handles the Android App for Employees (Native GPS/Camera).</li>
-            <li>Laravel Blade (Server-Side) renders Admin, Client, <strong>and Employee Web Panels</strong>.</li>
-            <li>Massive reduction in development time and complexity.</li>
-          </ul>
-        </div>
 
-        <div class="bg-slate-50 p-6 rounded-xl border border-slate-100">
-          <div class="w-10 h-10 bg-emerald-100 text-emerald-600 rounded-lg flex items-center justify-center mb-4">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 01-2 2m-2-4h.01M17 16h.01"></path></svg>
+          <div class="bg-slate-50 p-6 rounded-xl border border-slate-100">
+            <div class="w-10 h-10 bg-emerald-100 text-emerald-600 rounded-lg flex items-center justify-center mb-4">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 01-2 2m-2-4h.01M17 16h.01"></path></svg>
+            </div>
+            <h3 class="text-xl font-bold mb-2">Backend API & Logic</h3>
+            <p class="text-sm text-slate-600 mb-3"><strong>Laravel (PHP 8.x)</strong></p>
+            <ul class="text-sm text-slate-500 space-y-2 list-disc pl-4">
+              <li>Built-in Auth (Sanctum/Breeze), ORM (Eloquent), and Routing out-of-the-box.</li>
+              <li>Extremely affordable developer ecosystem.</li>
+              <li>Built-in AWS S3 disk driver for instant cloud storage integration.</li>
+            </ul>
           </div>
-          <h3 class="text-xl font-bold mb-2">Backend API & Logic</h3>
-          <p class="text-sm text-slate-600 mb-3"><strong>Laravel (PHP 8.x)</strong></p>
-          <ul class="text-sm text-slate-500 space-y-2 list-disc pl-4">
-            <li>Built-in Auth (Sanctum/Breeze), ORM (Eloquent), and Routing out-of-the-box.</li>
-            <li>Extremely affordable developer ecosystem.</li>
-            <li>Built-in AWS S3 disk driver for instant cloud storage integration.</li>
-          </ul>
-        </div>
 
-        <div class="bg-slate-50 p-6 rounded-xl border border-slate-100">
-          <div class="w-10 h-10 bg-purple-100 text-purple-600 rounded-lg flex items-center justify-center mb-4">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
+          <div class="bg-slate-50 p-6 rounded-xl border border-slate-100">
+            <div class="w-10 h-10 bg-purple-100 text-purple-600 rounded-lg flex items-center justify-center mb-4">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
+            </div>
+            <h3 class="text-xl font-bold mb-2">AWS Infrastructure</h3>
+            <p class="text-sm text-slate-600 mb-3"><strong>EC2 + RDS + S3 (Free Tier)</strong></p>
+            <ul class="text-sm text-slate-500 space-y-2 list-disc pl-4">
+              <li><strong>Compute:</strong> AWS EC2 (t3.micro) running Laravel (PHP-FPM) and Nginx.</li>
+              <li><strong>Database:</strong> AWS RDS (PostgreSQL/MySQL db.t3.micro) for secure, managed data.</li>
+              <li><strong>Storage:</strong> Amazon S3 for cheap, infinitely scalable selfie/incident image storage.</li>
+            </ul>
           </div>
-          <h3 class="text-xl font-bold mb-2">AWS Infrastructure</h3>
-          <p class="text-sm text-slate-600 mb-3"><strong>EC2 + RDS + S3 (Free Tier)</strong></p>
-          <ul class="text-sm text-slate-500 space-y-2 list-disc pl-4">
-            <li><strong>Compute:</strong> AWS EC2 (t3.micro) running Laravel (PHP-FPM) and Nginx.</li>
-            <li><strong>Database:</strong> AWS RDS (PostgreSQL/MySQL db.t3.micro) for secure, managed data.</li>
-            <li><strong>Storage:</strong> Amazon S3 for cheap, infinitely scalable selfie/incident image storage.</li>
-          </ul>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- Architecture Section -->
-    <section class="card rounded-2xl p-8 md:p-10">
-      <div class="text-sm font-bold text-blue-600 uppercase tracking-widest mb-2">2. Architecture Diagram</div>
-      <h2 class="text-3xl font-bold mb-6">Data Flow on AWS Infrastructure</h2>
-      
-      <div class="bg-slate-900 rounded-xl p-6 overflow-x-auto text-orange-400 font-mono text-sm leading-relaxed shadow-inner">
+      <!-- Architecture Section -->
+      <section class="card rounded-2xl p-8 md:p-10">
+        <div class="text-sm font-bold text-blue-600 uppercase tracking-widest mb-2">2. Architecture Diagram</div>
+        <h2 class="text-3xl font-bold mb-6">Data Flow on AWS Infrastructure</h2>
+        
+        <div class="bg-slate-900 rounded-xl p-6 overflow-x-auto text-orange-400 font-mono text-sm leading-relaxed shadow-inner">
 <pre>
 [ Mobile App (Android) ]   [ Admin/Client Web Panels ]   [ Employee Web Portal ]
        (Employee)               (Rendered via Blade)      (Rendered via Blade)
@@ -149,187 +162,195 @@
              │ - shifts         │       │ - pdfs/         │
              └──────────────────┘       └─────────────────┘
 </pre>
-      </div>
-      <div class="mt-4 flex flex-wrap gap-4 text-sm text-slate-600">
-        <span class="flex items-center gap-2"><div class="w-3 h-3 rounded-full bg-orange-500"></div> Leverages AWS 12-Month Free Tier for EC2, RDS, and S3.</span>
-        <span class="flex items-center gap-2"><div class="w-3 h-3 rounded-full bg-blue-500"></div> API communicates with S3 via AWS SDK (no local disk bloat).</span>
-      </div>
-    </section>
-
-    <!-- NEW Feature Section -->
-    <section class="card rounded-2xl p-8 md:p-10">
-      <div class="text-sm font-bold text-blue-600 uppercase tracking-widest mb-2">3. Feature Breakdown by User Role</div>
-      <h2 class="text-3xl font-bold mb-6">Omnichannel Access & Core Capabilities</h2>
-      <p class="text-slate-600 mb-8">To ensure no employee is left behind due to device constraints, we've introduced an Employee Web Portal built seamlessly into the Laravel backend, sharing the same logic as the Admin/Client panels.</p>
-      
-      <div class="grid md:grid-cols-2 gap-6">
-        <!-- Employee Mobile App -->
-        <div class="bg-white border border-slate-200 p-6 rounded-xl shadow-sm">
-          <div class="flex items-center gap-3 mb-4">
-            <div class="w-8 h-8 bg-blue-100 text-blue-600 rounded flex items-center justify-center">
-              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>
-            </div>
-            <h3 class="font-bold text-lg">Employee Mobile App (Android)</h3>
-          </div>
-          <ul class="space-y-2 text-sm text-slate-600 list-none">
-            <li class="flex items-start gap-2"><span class="text-blue-500 mt-0.5">✓</span> Native Start/End Duty with forced GPS checks.</li>
-            <li class="flex items-start gap-2"><span class="text-blue-500 mt-0.5">✓</span> Native Camera integration for verified selfies.</li>
-            <li class="flex items-start gap-2"><span class="text-blue-500 mt-0.5">✓</span> View assigned shifts and site details.</li>
-            <li class="flex items-start gap-2"><span class="text-blue-500 mt-0.5">✓</span> Submit Incident Reports with live photos.</li>
-            <li class="flex items-start gap-2"><span class="text-blue-500 mt-0.5">✓</span> Emergency SOS button for immediate escalation.</li>
-          </ul>
         </div>
-
-        <!-- Employee Web Portal -->
-        <div class="bg-white border border-slate-200 p-6 rounded-xl shadow-sm">
-          <div class="flex items-center gap-3 mb-4">
-            <div class="w-8 h-8 bg-emerald-100 text-emerald-600 rounded flex items-center justify-center">
-              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"></path></svg>
-            </div>
-            <h3 class="font-bold text-lg">Employee Web Portal (Browser)</h3>
-          </div>
-          <ul class="space-y-2 text-sm text-slate-600 list-none">
-            <li class="flex items-start gap-2"><span class="text-emerald-500 mt-0.5">✓</span> Browser-based login for users without Androids.</li>
-            <li class="flex items-start gap-2"><span class="text-emerald-500 mt-0.5">✓</span> HTML5 Geolocation for duty check-ins (fallback).</li>
-            <li class="flex items-start gap-2"><span class="text-emerald-500 mt-0.5">✓</span> HTML5 Media capture for selfies via mobile browsers.</li>
-            <li class="flex items-start gap-2"><span class="text-emerald-500 mt-0.5">✓</span> View schedules and basic profile data.</li>
-            <li class="flex items-start gap-2"><span class="text-emerald-500 mt-0.5">✓</span> Optimized for low-end mobile web browsers.</li>
-          </ul>
+        <div class="mt-4 flex flex-wrap gap-4 text-sm text-slate-600">
+          <span class="flex items-center gap-2"><div class="w-3 h-3 rounded-full bg-orange-500"></div> Leverages AWS 12-Month Free Tier for EC2, RDS, and S3.</span>
+          <span class="flex items-center gap-2"><div class="w-3 h-3 rounded-full bg-blue-500"></div> API communicates with S3 via AWS SDK (no local disk bloat).</span>
         </div>
+      </section>
 
-        <!-- Admin Web Panel -->
-        <div class="bg-white border border-slate-200 p-6 rounded-xl shadow-sm">
-          <div class="flex items-center gap-3 mb-4">
-            <div class="w-8 h-8 bg-purple-100 text-purple-600 rounded flex items-center justify-center">
-              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
-            </div>
-            <h3 class="font-bold text-lg">Admin Web Panel</h3>
-          </div>
-          <ul class="space-y-2 text-sm text-slate-600 list-none">
-            <li class="flex items-start gap-2"><span class="text-purple-500 mt-0.5">✓</span> Master dashboard with daily attendance overview.</li>
-            <li class="flex items-start gap-2"><span class="text-purple-500 mt-0.5">✓</span> Manage Employees, Clients, and Site locations.</li>
-            <li class="flex items-start gap-2"><span class="text-purple-500 mt-0.5">✓</span> Create and assign shifts to workforce.</li>
-            <li class="flex items-start gap-2"><span class="text-purple-500 mt-0.5">✓</span> Monitor incoming Incident Reports and SOS alerts.</li>
-            <li class="flex items-start gap-2"><span class="text-purple-500 mt-0.5">✓</span> Generate/Download global daily activity reports.</li>
-          </ul>
-        </div>
-
-        <!-- Client Web Panel -->
-        <div class="bg-white border border-slate-200 p-6 rounded-xl shadow-sm">
-          <div class="flex items-center gap-3 mb-4">
-            <div class="w-8 h-8 bg-orange-100 text-orange-600 rounded flex items-center justify-center">
-              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
-            </div>
-            <h3 class="font-bold text-lg">Client Web Panel</h3>
-          </div>
-          <ul class="space-y-2 text-sm text-slate-600 list-none">
-            <li class="flex items-start gap-2"><span class="text-orange-500 mt-0.5">✓</span> Read-only access restricted to own site/team.</li>
-            <li class="flex items-start gap-2"><span class="text-orange-500 mt-0.5">✓</span> Real-time Traffic Light Status (Green/Yellow/Red).</li>
-            <li class="flex items-start gap-2"><span class="text-orange-500 mt-0.5">✓</span> View guard check-in timestamps and selfie proofs.</li>
-            <li class="flex items-start gap-2"><span class="text-orange-500 mt-0.5">✓</span> View incidents relevant to their specific sites.</li>
-            <li class="flex items-start gap-2"><span class="text-orange-500 mt-0.5">✓</span> Download tailored daily PDF reports.</li>
-          </ul>
-        </div>
-      </div>
-    </section>
-
-    <!-- Budget Section -->
-    <section class="card rounded-2xl p-8 md:p-10 border-t-4 border-emerald-500">
-      <div class="text-sm font-bold text-emerald-600 uppercase tracking-widest mb-2">4. Revised Budget Allocation</div>
-      <h2 class="text-3xl font-bold mb-6">Target: <span class="gradient-text">₹60,000 Total Execution</span></h2>
-      <p class="text-slate-600 mb-6">By leveraging Laravel's built-in Blade templating, we eliminate the need for a separate Web SPA. This drastically reduces development hours and QA complexity, further driving down costs.</p>
-      
-      <div class="overflow-hidden rounded-xl border border-slate-200">
-        <table class="w-full text-left bg-white">
-          <thead class="bg-slate-50 border-b border-slate-200">
-            <tr>
-              <th class="py-4 px-6 font-bold text-slate-700">Phase / Area</th>
-              <th class="py-4 px-6 font-bold text-slate-700">Optimized Cost</th>
-              <th class="py-4 px-6 font-bold text-slate-700">Strategy</th>
-            </tr>
-          </thead>
-          <tbody class="divide-y divide-slate-100 text-sm">
-            <tr>
-              <td class="py-4 px-6 font-semibold text-slate-800">Full-Stack Development</td>
-              <td class="py-4 px-6 font-bold text-slate-900">₹38,000</td>
-              <td class="py-4 px-6 text-slate-600">Dev time drops from 4 weeks to ~3 weeks. Laravel Blade replaces the need to build and integrate a separate Admin web application.</td>
-            </tr>
-            <tr>
-              <td class="py-4 px-6 font-semibold text-slate-800">UI/UX Kit</td>
-              <td class="py-4 px-6 font-bold text-slate-900">₹4,000</td>
-              <td class="py-4 px-6 text-slate-600">Purchase a Laravel Admin template and Flutter UI kit. No custom Figma design needed.</td>
-            </tr>
-            <tr>
-              <td class="py-4 px-6 font-semibold text-slate-800">QA & Bug Fixing</td>
-              <td class="py-4 px-6 font-bold text-slate-900">₹8,000</td>
-              <td class="py-4 px-6 text-slate-600">Less complex QA cycle since web dashboards are server-rendered (no complex client-side state).</td>
-            </tr>
-            <tr>
-              <td class="py-4 px-6 font-semibold text-slate-800">AWS Infra (Year 1)</td>
-              <td class="py-4 px-6 font-bold text-slate-900">₹6,000</td>
-              <td class="py-4 px-6 text-slate-600">AWS Free Tier covers EC2/RDS/S3. Budget is for Domain, Route53 (DNS), and small egress data buffers.</td>
-            </tr>
-            <tr>
-              <td class="py-4 px-6 font-semibold text-slate-800">Post-Launch Reserve</td>
-              <td class="py-4 px-6 font-bold text-slate-900">₹4,000</td>
-              <td class="py-4 px-6 text-slate-600">Buffer for emergency patches in the first 2 weeks.</td>
-            </tr>
-            <tr class="bg-slate-50">
-              <td class="py-5 px-6 font-bold text-slate-900 text-lg">Total Build Cost</td>
-              <td class="py-5 px-6 font-bold text-emerald-600 text-xl">₹60,000</td>
-              <td class="py-5 px-6 font-semibold text-emerald-600">Total Profit/Buffer vs ₹1.5L Budget: ₹90,000 (60%)</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </section>
-
-    <!-- Delivery Roadmap -->
-    <section class="card rounded-2xl p-8 md:p-10">
-      <div class="text-sm font-bold text-blue-600 uppercase tracking-widest mb-2">5. Custom Backend Roadmap</div>
-      <h2 class="text-3xl font-bold mb-8">4-Week Execution Timeline</h2>
-      
-      <div class="space-y-6 relative before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-blue-500 before:to-slate-200">
+      <!-- Feature Section -->
+      <section class="card rounded-2xl p-8 md:p-10">
+        <div class="text-sm font-bold text-blue-600 uppercase tracking-widest mb-2">3. Feature Breakdown by User Role</div>
+        <h2 class="text-3xl font-bold mb-6">Omnichannel Access & Core Capabilities</h2>
+        <p class="text-slate-600 mb-8">To ensure no employee is left behind due to device constraints, we've introduced an Employee Web Portal built seamlessly into the Laravel backend, sharing the same logic as the Admin/Client panels.</p>
         
-        <!-- Week 1 -->
-        <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
-          <div class="flex items-center justify-center w-10 h-10 rounded-full border-4 border-white bg-blue-500 text-white shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10 font-bold text-sm">W1</div>
-          <div class="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] bg-white border border-slate-200 p-5 rounded-xl shadow-sm">
-            <h3 class="font-bold text-lg mb-1">AWS Setup & API Foundation</h3>
-            <p class="text-slate-600 text-sm">Provision EC2, RDS (MySQL/PgSQL), S3. Install Laravel. Scaffold Eloquent models, migrations, and Sanctum API Auth.</p>
+        <div class="grid md:grid-cols-2 gap-6">
+          <div class="bg-white border border-slate-200 p-6 rounded-xl shadow-sm">
+            <div class="flex items-center gap-3 mb-4">
+              <div class="w-8 h-8 bg-blue-100 text-blue-600 rounded flex items-center justify-center">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>
+              </div>
+              <h3 class="font-bold text-lg">Employee Mobile App (Android)</h3>
+            </div>
+            <ul class="space-y-2 text-sm text-slate-600 list-none">
+              <li class="flex items-start gap-2"><span class="text-blue-500 mt-0.5">✓</span> Native Start/End Duty with forced GPS checks.</li>
+              <li class="flex items-start gap-2"><span class="text-blue-500 mt-0.5">✓</span> Native Camera integration for verified selfies.</li>
+              <li class="flex items-start gap-2"><span class="text-blue-500 mt-0.5">✓</span> View assigned shifts and site details.</li>
+              <li class="flex items-start gap-2"><span class="text-blue-500 mt-0.5">✓</span> Submit Incident Reports with live photos.</li>
+              <li class="flex items-start gap-2"><span class="text-blue-500 mt-0.5">✓</span> Emergency SOS button for immediate escalation.</li>
+            </ul>
+          </div>
+
+          <div class="bg-white border border-slate-200 p-6 rounded-xl shadow-sm">
+            <div class="flex items-center gap-3 mb-4">
+              <div class="w-8 h-8 bg-emerald-100 text-emerald-600 rounded flex items-center justify-center">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"></path></svg>
+              </div>
+              <h3 class="font-bold text-lg">Employee Web Portal (Browser)</h3>
+            </div>
+            <ul class="space-y-2 text-sm text-slate-600 list-none">
+              <li class="flex items-start gap-2"><span class="text-emerald-500 mt-0.5">✓</span> Browser-based login for users without Androids.</li>
+              <li class="flex items-start gap-2"><span class="text-emerald-500 mt-0.5">✓</span> HTML5 Geolocation for duty check-ins (fallback).</li>
+              <li class="flex items-start gap-2"><span class="text-emerald-500 mt-0.5">✓</span> HTML5 Media capture for selfies via mobile browsers.</li>
+              <li class="flex items-start gap-2"><span class="text-emerald-500 mt-0.5">✓</span> View schedules and basic profile data.</li>
+            </ul>
+          </div>
+
+          <div class="bg-white border border-slate-200 p-6 rounded-xl shadow-sm">
+            <div class="flex items-center gap-3 mb-4">
+              <div class="w-8 h-8 bg-purple-100 text-purple-600 rounded flex items-center justify-center">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+              </div>
+              <h3 class="font-bold text-lg">Admin Web Panel</h3>
+            </div>
+            <ul class="space-y-2 text-sm text-slate-600 list-none">
+              <li class="flex items-start gap-2"><span class="text-purple-500 mt-0.5">✓</span> Master dashboard with daily attendance overview.</li>
+              <li class="flex items-start gap-2"><span class="text-purple-500 mt-0.5">✓</span> Manage Employees, Clients, and Site locations.</li>
+              <li class="flex items-start gap-2"><span class="text-purple-500 mt-0.5">✓</span> Create and assign shifts to workforce.</li>
+              <li class="flex items-start gap-2"><span class="text-purple-500 mt-0.5">✓</span> Generate/Download global daily activity reports.</li>
+            </ul>
+          </div>
+
+          <div class="bg-white border border-slate-200 p-6 rounded-xl shadow-sm">
+            <div class="flex items-center gap-3 mb-4">
+              <div class="w-8 h-8 bg-orange-100 text-orange-600 rounded flex items-center justify-center">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+              </div>
+              <h3 class="font-bold text-lg">Client Web Panel</h3>
+            </div>
+            <ul class="space-y-2 text-sm text-slate-600 list-none">
+              <li class="flex items-start gap-2"><span class="text-orange-500 mt-0.5">✓</span> Read-only access restricted to own site/team.</li>
+              <li class="flex items-start gap-2"><span class="text-orange-500 mt-0.5">✓</span> Real-time Traffic Light Status (Green/Yellow/Red).</li>
+              <li class="flex items-start gap-2"><span class="text-orange-500 mt-0.5">✓</span> View guard check-in timestamps and selfie proofs.</li>
+              <li class="flex items-start gap-2"><span class="text-orange-500 mt-0.5">✓</span> Download tailored daily PDF reports.</li>
+            </ul>
           </div>
         </div>
+      </section>
 
-        <!-- Week 2 -->
-        <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group">
-          <div class="flex items-center justify-center w-10 h-10 rounded-full border-4 border-white bg-slate-300 text-slate-700 shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10 font-bold text-sm">W2</div>
-          <div class="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] bg-white border border-slate-200 p-5 rounded-xl shadow-sm">
-            <h3 class="font-bold text-lg mb-1">Employee App Core (Flutter)</h3>
-            <p class="text-slate-600 text-sm">Flutter mobile views: Start/End Duty. Connect GPS. Configure Laravel's S3 storage driver to accept and save image uploads seamlessly.</p>
-          </div>
+      <!-- Budget Section -->
+      <section class="card rounded-2xl p-8 md:p-10 border-t-4 border-emerald-500">
+        <div class="text-sm font-bold text-emerald-600 uppercase tracking-widest mb-2">4. Revised Budget Allocation</div>
+        <h2 class="text-3xl font-bold mb-6">Target: <span class="gradient-text">₹60,000 Total Execution</span></h2>
+        
+        <div class="overflow-hidden rounded-xl border border-slate-200">
+          <table class="w-full text-left bg-white">
+            <thead class="bg-slate-50 border-b border-slate-200">
+              <tr>
+                <th class="py-4 px-6 font-bold text-slate-700">Phase / Area</th>
+                <th class="py-4 px-6 font-bold text-slate-700">Optimized Cost</th>
+                <th class="py-4 px-6 font-bold text-slate-700">Strategy</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-100 text-sm">
+              <tr>
+                <td class="py-4 px-6 font-semibold text-slate-800">Full-Stack Development</td>
+                <td class="py-4 px-6 font-bold text-slate-900">₹38,000</td>
+                <td class="py-4 px-6 text-slate-600">Laravel Blade replaces the need to build and integrate a separate Admin web application.</td>
+              </tr>
+              <tr>
+                <td class="py-4 px-6 font-semibold text-slate-800">UI/UX Kit</td>
+                <td class="py-4 px-6 font-bold text-slate-900">₹4,000</td>
+                <td class="py-4 px-6 text-slate-600">Purchase a Laravel Admin template and Flutter UI kit.</td>
+              </tr>
+              <tr>
+                <td class="py-4 px-6 font-semibold text-slate-800">QA & Bug Fixing</td>
+                <td class="py-4 px-6 font-bold text-slate-900">₹8,000</td>
+                <td class="py-4 px-6 text-slate-600">Less complex QA cycle since web dashboards are server-rendered (no complex client-side state).</td>
+              </tr>
+              <tr>
+                <td class="py-4 px-6 font-semibold text-slate-800">AWS Infra (Year 1)</td>
+                <td class="py-4 px-6 font-bold text-slate-900">₹6,000</td>
+                <td class="py-4 px-6 text-slate-600">AWS Free Tier covers EC2/RDS/S3. Budget is for Domain, Route53 (DNS), and small egress data buffers.</td>
+              </tr>
+              <tr>
+                <td class="py-4 px-6 font-semibold text-slate-800">Post-Launch Reserve</td>
+                <td class="py-4 px-6 font-bold text-slate-900">₹4,000</td>
+                <td class="py-4 px-6 text-slate-600">Buffer for emergency patches in the first 2 weeks.</td>
+              </tr>
+              <tr class="bg-slate-50">
+                <td class="py-5 px-6 font-bold text-slate-900 text-lg">Total Build Cost</td>
+                <td class="py-5 px-6 font-bold text-emerald-600 text-xl">₹60,000</td>
+                <td class="py-5 px-6 font-semibold text-emerald-600">Total Profit/Buffer: ₹90,000 (60%)</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
+      </section>
 
-        <!-- Week 3 -->
-        <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group">
-          <div class="flex items-center justify-center w-10 h-10 rounded-full border-4 border-white bg-slate-300 text-slate-700 shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10 font-bold text-sm">W3</div>
-          <div class="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] bg-white border border-slate-200 p-5 rounded-xl shadow-sm">
-            <h3 class="font-bold text-lg mb-1">Web Panels & PDF Logic</h3>
-            <p class="text-slate-600 text-sm">Build server-side Blade views for Admins & Clients. Implement dashboard UI and use Laravel Snappy to generate automated shift reports.</p>
+      <!-- Delivery Roadmap -->
+      <section class="card rounded-2xl p-8 md:p-10">
+        <div class="text-sm font-bold text-blue-600 uppercase tracking-widest mb-2">5. Custom Backend Roadmap</div>
+        <h2 class="text-3xl font-bold mb-8">4-Week Execution Timeline</h2>
+        
+        <div class="space-y-6 relative before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-blue-500 before:to-slate-200">
+          
+          <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
+            <div class="flex items-center justify-center w-10 h-10 rounded-full border-4 border-white bg-blue-500 text-white shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10 font-bold text-sm">W1</div>
+            <div class="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] bg-white border border-slate-200 p-5 rounded-xl shadow-sm">
+              <h3 class="font-bold text-lg mb-1">AWS Setup & API Foundation</h3>
+              <p class="text-slate-600 text-sm">Provision EC2, RDS (MySQL/PgSQL), S3. Install Laravel. Scaffold Eloquent models, migrations, and Sanctum API Auth.</p>
+            </div>
           </div>
-        </div>
 
-        <!-- Week 4 -->
-        <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group">
-          <div class="flex items-center justify-center w-10 h-10 rounded-full border-4 border-white bg-slate-300 text-slate-700 shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10 font-bold text-sm">W4</div>
-          <div class="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] bg-white border border-slate-200 p-5 rounded-xl shadow-sm">
-            <h3 class="font-bold text-lg mb-1">AWS Deployment & Handoff</h3>
-            <p class="text-slate-600 text-sm">Nginx SSL configuration via Let's Encrypt. Setup AWS CloudWatch billing alarms. Generate APK, upload to Play Store.</p>
+          <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group">
+            <div class="flex items-center justify-center w-10 h-10 rounded-full border-4 border-white bg-slate-300 text-slate-700 shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10 font-bold text-sm">W2</div>
+            <div class="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] bg-white border border-slate-200 p-5 rounded-xl shadow-sm">
+              <h3 class="font-bold text-lg mb-1">Employee App Core (Flutter)</h3>
+              <p class="text-slate-600 text-sm">Flutter mobile views: Start/End Duty. Connect GPS. Configure Laravel's S3 storage driver to accept and save image uploads seamlessly.</p>
+            </div>
           </div>
+
+          <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group">
+            <div class="flex items-center justify-center w-10 h-10 rounded-full border-4 border-white bg-slate-300 text-slate-700 shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10 font-bold text-sm">W3</div>
+            <div class="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] bg-white border border-slate-200 p-5 rounded-xl shadow-sm">
+              <h3 class="font-bold text-lg mb-1">Web Panels & PDF Logic</h3>
+              <p class="text-slate-600 text-sm">Build server-side Blade views for Admins & Clients. Implement dashboard UI and use Laravel Snappy to generate automated shift reports.</p>
+            </div>
+          </div>
+
+          <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group">
+            <div class="flex items-center justify-center w-10 h-10 rounded-full border-4 border-white bg-slate-300 text-slate-700 shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10 font-bold text-sm">W4</div>
+            <div class="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] bg-white border border-slate-200 p-5 rounded-xl shadow-sm">
+              <h3 class="font-bold text-lg mb-1">AWS Deployment & Handoff</h3>
+              <p class="text-slate-600 text-sm">Nginx SSL configuration via Let's Encrypt. Setup AWS CloudWatch billing alarms. Generate APK, upload to Play Store.</p>
+            </div>
+          </div>
+
         </div>
+      </section>
+    </main>
+  </div>
 
-      </div>
-    </section>
-
-  </main>
+  <!-- Javascript for View Switching -->
+  <script>
+    function switchView(viewId) {
+      // Hide all views
+      document.getElementById('tech-plan-view').classList.add('hidden-view');
+      document.getElementById('srs-view').classList.add('hidden-view');
+      
+      // Show requested view
+      document.getElementById(viewId).classList.remove('hidden-view');
+      window.scrollTo(0, 0);
+      
+      // Adjust body background to match the specific view design
+      if (viewId === 'srs-view') {
+        document.body.style.background = '#f8fafc';
+      } else {
+        document.body.style.background = '#f0f4f8';
+      }
+    }
+  </script>
 </body>
 </html>
