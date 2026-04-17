@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AWS Infrastructure | NE Brothers & MAKU Security</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        /* 1. THE SETUP & CSS VARIABLES */
+        :root {
+            --bg-dark: #0B0F19;
+            --bg-panel: #151B2B;
+            --text-main: #F8FAFC;
+            --text-muted: #94A3B8;
+            --accent-cyan: #00D1FF;
+            --accent-purple: #7B61FF;
+            --accent-success: #10B981;
+            --border-color: #1E293B;
+        }
+
+        * {
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        p {
+            margin: 0;
+            margin-bottom: 15px;
+        }
+
+        body {
+            background-color: #020617; /* Very dark slate outside the slides */
+            display: grid;
+            gap: 40px;
+            grid-template-columns: 1fr;
+            margin: 0;
+            min-height: 100vh;
+            padding: 40px 0;
+            place-items: center;
+        }
+
+        .slide-container {
+            align-items: center;
+            background-color: var(--bg-dark);
+            border-radius: 16px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+            display: flex;
+            flex-direction: column;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            height: 720px;
+            justify-content: center;
+            overflow: hidden;
+            padding: 60px;
+            position: relative;
+            width: 1280px;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .slide-container::before {
+            content: '';
+            height: 100%;
+            left: 0;
+            position: absolute;
+            top: 0;
+            width: 100%;
+            z-index: 0;
+        }
+
+        .slide-container > * {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* 2. CONSISTENT TYPOGRAPHY */
+        .slide-container h1,
+        .slide-container h2,
+        .slide-container h3 {
+            color: var(--text-main);
+            font-weight: 800;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            margin: 0;
+        }
+
+        .slide-container p,
+        .slide-container li,
+        .slide-container .subtitle,
+        .slide-container .chart-summary,
+        .slide-container .bar .label,
+        .slide-container th,
+        .slide-container td,
+        .slide-container .bleed-text-side p {
+            color: var(--text-muted);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        /* Consistent Font Sizes */
+        .slide-container h1 {
+            font-size: 64px;
+            line-height: 1.2;
+        }
+
+        .slide-container .slide-title {
+            color: var(--accent-cyan);
+            font-size: 40px;
+            font-weight: 700;
+            margin-bottom: 40px;
+            text-align: left;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .slide-container .slide-title i {
+            color: var(--accent-purple);
+        }
+
+        .slide-container h3 {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .slide-container p,
+        .slide-container li,
+        .slide-container .subtitle,
+        .slide-container .chart-summary,
+        .slide-container .bar .label,
+        .slide-container th,
+        .slide-container td,
+        .slide-container .bleed-text-side p {
+            font-size: 18px;
+            line-height: 1.6;
+        }
+
+        .slide-container .subtitle {
+            font-weight: 400;
+            margin: 20px auto;
+        }
+
+        .slide-container .content-area {
+            align-items: center;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+            justify-content: center;
+            width: 100%;
+        }
+
+        /* 3. LAYOUT DEFINITIONS */
+        .title-layout {
+            text-align: center;
+        }
+        
+        /* Section Title Layout */
+        .section-title-layout {
+            align-items: center;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            justify-content: center;
+            text-align: center;
+            width: 100%;
+        }
+
+        .section-title-layout h2 {
+            font-size: 64px;
+            margin-bottom: 20px;
+        }
+
+        .section-title-layout p {
+            color: var(--accent-cyan);
+            font-size: 24px;
+            margin: 0 auto;
+            max-width: 800px;
+        }
+
+        .section-title-layout hr {
+            background-color: var(--accent-purple);
+            border: none;
+            border-radius: 3px;
+            height: 6px;
+            margin: 30px auto;
+            width: 120px;
+        }
+
+        /* Full Background Image */
+        .full-bg-image {
+            background-position: center;
+            background-size: cover;
+        }
+
+        .full-bg-image .content-overlay {
+            text-align: center;
+            background: rgba(11, 15, 25, 0.85);
+            padding: 60px;
+            border-radius: 20px;
+            border: 1px solid rgba(0, 209, 255, 0.2);
+            backdrop-filter: blur(10px);
+        }
+
+        /* Table Layout Customization */
+        .table-layout {
+            width: 100%;
+        }
+
+        .table-layout table {
+            background-color: var(--bg-panel);
+            border-collapse: collapse;
+            border-radius: 12px;
+            overflow: hidden;
+            width: 100%;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .table-layout th,
+        .table-layout td {
+            border-bottom: 1px solid var(--border-color);
+            padding: 14px 24px; 
+            text-align: left;
+        }
+
+        .table-layout th {
+            background-color: rgba(0, 209, 255, 0.1);
+            color: var(--accent-cyan);
+            font-size: 14px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .table-layout td {
+            color: var(--text-main);
+            font-size: 15px;
+        }
+
+        .table-layout tr:last-child td {
+            border-bottom: none;
+        }
+
+        .table-layout tr:hover {
+            background-color: rgba(255, 255, 255, 0.03);
+        }
+
+        .table-layout td:last-child {
+            color: var(--accent-cyan);
+            font-variant-numeric: tabular-nums;
+            font-weight: 700;
+        }
+        
+        .srs-highlight {
+            color: var(--accent-purple);
+            font-weight: 600;
+            font-size: 13px;
+            display: block;
+            margin-top: 4px;
+        }
+
+        /* Bleed_Image_Right layout */
+        .slide-container.bleed-image-layout {
+            align-items: start;
+            display: grid;
+            gap: 50px;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            padding: 0;
+        }
+
+        .slide-container.bleed-image-layout > .content-container {
+            padding: 60px 0 60px 60px;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .slide-container.bleed-image-layout > .image-container {
+            height: 100%;
+            overflow: hidden;
+            width: 100%;
+            position: relative;
+        }
+        
+        .image-container::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, var(--bg-dark) 0%, transparent 20%);
+        }
+
+        .slide-container.bleed-image-layout img.bleed-image-side {
+            border-radius: 0 16px 16px 0;
+            display: block;
+            height: 720px;
+            object-fit: cover;
+            object-position: center;
+            width: 100%;
+        }
+
+        .slide-container.bleed-image-layout .bleed-text-side {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            flex-grow: 1;
+        }
+
+        /* Custom typography for financial highlights */
+        .financial-heading {
+            color: var(--text-muted);
+            font-size: 16px;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+
+        .financial-value {
+            color: var(--text-main);
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 32px;
+        }
+
+        .total-block {
+            background: rgba(0, 209, 255, 0.05);
+            border-radius: 16px;
+            border: 1px solid rgba(0, 209, 255, 0.2);
+            padding: 32px;
+            margin-top: 10px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .total-block::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--accent-cyan);
+        }
+
+        .total-heading {
+            color: var(--accent-cyan);
+            font-size: 18px;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+        }
+
+        .huge-number {
+            -webkit-background-clip: text;
+            font-size: 64px;
+			color: white;
+            font-weight: 800;
+            line-height: 1.1;
+            margin: 0;
+        }
+
+        /* SRS Features Grid */
+        .srs-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            width: 100%;
+            margin-top: 40px;
+        }
+        
+        .srs-card {
+            background: var(--bg-panel);
+            padding: 40px 30px;
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+        
+        .srs-card i {
+            font-size: 48px;
+            color: var(--accent-cyan);
+            margin-bottom: 20px;
+            display: block;
+        }
+        
+        .srs-card h4 {
+            color: var(--text-main);
+            font-size: 22px;
+            margin: 0 0 15px 0;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+        
+        .srs-card p {
+            font-size: 15px;
+            color: var(--text-muted);
+            margin: 0;
+        }
+
+        /* Q&A Layout */
+        .qa-layout {
+            align-self: center;
+            margin: 0 auto;
+            text-align: center;
+            width: 100%;
+        }
+
+        .qa-layout h2 {
+            font-size: 72px;
+            margin-bottom: 20px;
+            background: linear-gradient(90deg, var(--accent-cyan), var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .qa-layout p {
+            font-size: 26px;
+            color: var(--text-main);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .qa-layout .contact-info {
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            color: var(--accent-success);
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-size: 18px;
+            font-weight: 700;
+            margin-top: 50px;
+            display: inline-block;
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- SLIDE 1: TITLE -->
+    <div class="slide-container full-bg-image" id="slide1" style="background-image: url('http://googleusercontent.com/image_collection/image_retrieval/7132505336920910991');">
+        <div class="content-overlay">
+            <h3 style="color: var(--text-muted); font-weight: 500; font-size: 24px; margin-bottom: 20px; letter-spacing: 2px;">SRS VERSION 3.0</h3>
+            <h1 style="margin-bottom: 20px;">NE Brothers & MAKU Security<br><span style="color: var(--accent-cyan);">Workforce Management System</span></h1>
+            <p class="subtitle" style="font-size: 22px; max-width: 800px; line-height: 1.5;">AWS Infrastructure Proposal tailored for Biometric & Location Intelligence</p>
+        </div>
+    </div>
+
+    <!-- SLIDE 3: PLAN 1 TITLE -->
+    <div class="slide-container" id="slide3">
+        <div class="section-title-layout">
+            <hr>
+            <h2>Plan 1: MVP Phase 1 (Standard)</h2>
+            <p>A cost-effective baseline architecture to launch the Geo + Face verified mobile application and web portals.</p>
+        </div>
+    </div>
+
+    <!-- SLIDE 4: PLAN 1 BREAKDOWN -->
+    <div class="slide-container" id="slide4">
+        <h2 class="slide-title"><i class="fa-solid fa-server"></i> Plan 1: Architecture Mapping</h2>
+        <div class="content-area">
+            <div class="table-layout">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Infrastructure Component</th>
+                            <th>SRS v3.0 Purpose / Specification</th>
+                            <th>Base Cost (INR/Yr)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Compute (EC2)</td>
+                            <td>t3.small (2 vCPU, 2GB RAM)<span class="srs-highlight">Processes Face Match Scores & Geo-Radius</span></td>
+                            <td>₹24,000</td>
+                        </tr>
+                        <tr>
+                            <td>Database (RDS)</td>
+                            <td>db.t3.micro (Managed MySQL)<span class="srs-highlight">Stores Guard Profiles, Sites & Timestamps</span></td>
+                            <td>₹24,000</td>
+                        </tr>
+                        <tr>
+                            <td>Storage (S3)</td>
+                            <td>~72–100 GB<span class="srs-highlight">Stores Registered Faces & Incident Images</span></td>
+                            <td>₹3,600</td>
+                        </tr>
+                        <tr>
+                            <td>CDN (CloudFront)</td>
+                            <td>Edge caching<span class="srs-highlight">Faster Admin/Client Web Panel load times</span></td>
+                            <td>₹3,600</td>
+                        </tr>
+                        <tr>
+                            <td>Load Balancer (ALB)</td>
+                            <td>Basic High Availability<span class="srs-highlight">Routes API traffic from Employee App</span></td>
+                            <td>₹18,000</td>
+                        </tr>
+                        <tr>
+                            <td>Data Transfer</td>
+                            <td>Network Outbound<span class="srs-highlight">Client reporting & Dashboard syncing</span></td>
+                            <td>₹6,000</td>
+                        </tr>
+                        <tr>
+                            <td>Monitoring</td>
+                            <td>CloudWatch + Logs<span class="srs-highlight">Tracks attendance flags & system health</span></td>
+                            <td>₹3,600</td>
+                        </tr>
+                        <tr>
+                            <td>Backup & DR</td>
+                            <td>S3 + RDS Snapshots<span class="srs-highlight">Ensures no loss of compliance data</span></td>
+                            <td>₹3,600</td>
+                        </tr>
+                        <tr>
+                            <td>SMS / Alerts</td>
+                            <td>Notifications<span class="srs-highlight">Delivers SOS Emergency Alerts rapidly</span></td>
+                            <td>₹3,600</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 5: PLAN 1 FINANCIALS -->
+    <div class="slide-container bleed-image-layout" id="slide5">
+        <div class="content-container">
+            <h2 class="slide-title"><i class="fa-solid fa-indian-rupee-sign"></i> Plan 1 Financials</h2>
+            <div class="content-area">
+                <div class="bleed-text-side">
+                    <h3 class="financial-heading">Base Infrastructure Total</h3>
+                    <p class="financial-value">₹90,000</p>
+                    
+                    <h3 class="financial-heading">IT Services GST (18%)</h3>
+                    <p class="financial-value">₹16,200</p>
+                    
+                    <div class="total-block">
+                        <h3 class="total-heading">Final Total (Yearly)</h3>
+                        <p class="huge-number">₹1,06,200</p>
+                    </div>
+                    <p style="margin-top: 20px; font-size: 14px; font-style: italic;">*Suitable for initial rollout and beta testing with smaller guard cohorts.</p>
+                </div>
+            </div>
+        </div>
+        <div class="image-container">
+            <img class="bleed-image-side" src="http://googleusercontent.com/image_collection/image_retrieval/6343663319012142726" alt="Server racks in a modern data center">
+        </div>
+    </div>
+
+    <!-- SLIDE 6: PLAN 2 TITLE -->
+    <div class="slide-container" id="slide6">
+        <div class="section-title-layout">
+            <hr>
+            <h2>Plan 2: Production & Scale</h2>
+            <p>Designed for Reliability (High Uptime) & Security (Biometric Handling).</p>
+        </div>
+    </div>
+
+    <!-- SLIDE 7: PLAN 2 BREAKDOWN -->
+    <div class="slide-container" id="slide7">
+        <h2 class="slide-title"><i class="fa-solid fa-layer-group"></i> Plan 2: Enterprise Mapping</h2>
+        <div class="content-area">
+            <div class="table-layout">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Infrastructure Component</th>
+                            <th>SRS v3.0 Purpose / Specification</th>
+                            <th>Base Cost (INR/Yr)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Compute (EC2)</td>
+                            <td>2 × t3.small (Active/Failover)<span class="srs-highlight">Zero downtime during peak check-in/out shifts</span></td>
+                            <td>₹48,000</td>
+                        </tr>
+                        <tr>
+                            <td>Load Balancer</td>
+                            <td>Application Load Balancer (ALB)<span class="srs-highlight">Balances heavy facial recognition API calls</span></td>
+                            <td>₹18,000</td>
+                        </tr>
+                        <tr>
+                            <td>Database (RDS)</td>
+                            <td>db.t3.small (Production Grade)<span class="srs-highlight">Faster queries for live Admin/Client tracking</span></td>
+                            <td>₹36,000</td>
+                        </tr>
+                        <tr>
+                            <td>Storage (S3)</td>
+                            <td>100–150 GB Buffer<span class="srs-highlight">Scalable space for Liveness Detection images</span></td>
+                            <td>₹5,000</td>
+                        </tr>
+                        <tr>
+                            <td>CDN (CloudFront)</td>
+                            <td>Edge Caching<span class="srs-highlight">Instant load of Web Panels worldwide</span></td>
+                            <td>₹5,000</td>
+                        </tr>
+                        <tr>
+                            <td>Monitoring</td>
+                            <td>Advanced CloudWatch<span class="srs-highlight">Real-time alerts for system bottlenecks</span></td>
+                            <td>₹5,000</td>
+                        </tr>
+                        <tr>
+                            <td>Backup & DR</td>
+                            <td>S3 Versioning + Snapshots<span class="srs-highlight">Enterprise compliance for tamper-proof data</span></td>
+                            <td>₹4,000</td>
+                        </tr>
+                        <tr>
+                            <td>Data Transfer</td>
+                            <td>High Volume Network<span class="srs-highlight">Smooth media transfer for Incident Reports</span></td>
+                            <td>₹6,000</td>
+                        </tr>
+                        <tr>
+                            <td>Security Layer</td>
+                            <td>AWS WAF + Shield Basic<span class="srs-highlight">Protects biometrics against spoofing/DDoS</span></td>
+                            <td>₹6,000</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 8: PLAN 2 FINANCIALS -->
+    <div class="slide-container bleed-image-layout" id="slide8">
+        <div class="content-container">
+            <h2 class="slide-title"><i class="fa-solid fa-indian-rupee-sign"></i> Plan 2 Financials</h2>
+            <div class="content-area">
+                <div class="bleed-text-side">
+                    <h3 class="financial-heading">Base Infrastructure Total</h3>
+                    <p class="financial-value">₹1,33,000</p>
+                    
+                    <h3 class="financial-heading">IT Services GST (18%)</h3>
+                    <p class="financial-value">₹23,940</p>
+                    
+                    <div class="total-block">
+                        <h3 class="total-heading">Final Total (Yearly)</h3>
+                        <p class="huge-number">₹1,56,940</p>
+                    </div>
+                    <p style="margin-top: 20px; font-size: 14px; font-style: italic;">*Recommended for complete organizational rollout and guaranteeing client SLAs.</p>
+                </div>
+            </div>
+        </div>
+        <div class="image-container">
+            <img class="bleed-image-side" src="http://googleusercontent.com/image_collection/image_retrieval/1133800131392796798" alt="High availability network architecture">
+        </div>
+    </div>
+
+
+</body>
+</html>
+```
