@@ -51,10 +51,13 @@
           By strategically leveraging the AWS Free Tier and Laravel's server-rendered web panels, we execute the Phase 1 MVP under <strong>₹60,000</strong>.
         </p>
         
-        <!-- LINK TO SRS -->
-        <div class="mb-10">
-          <button onclick="window.location.href='srs.html'" class="inline-flex items-center gap-2 px-6 py-3 bg-emerald-500 hover:bg-emerald-400 text-white font-bold rounded-full transition shadow-lg hover:scale-105">
+        <!-- HEADER BUTTONS -->
+        <div class="mb-10 flex flex-wrap gap-4">
+          <button onclick="window.location.href='srs_viewer.html'" class="inline-flex items-center gap-2 px-6 py-3 bg-emerald-500 hover:bg-emerald-400 text-white font-bold rounded-full transition shadow-lg hover:scale-105">
             Go to SRS Document <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+          </button>
+          <button onclick="window.location.href='infra.html'" class="inline-flex items-center gap-2 px-6 py-3 bg-purple-500 hover:bg-purple-400 text-white font-bold rounded-full transition shadow-lg hover:scale-105">
+            Infra & Pricing Details <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
           </button>
         </div>
 
@@ -329,6 +332,345 @@
           </div>
 
         </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- ============================================================== -->
+  <!-- VIEW 2: SOFTWARE REQUIREMENT SPECIFICATION (SRS)               -->
+  <!-- ============================================================== -->
+  <div id="srs-view" class="hidden-view flex-col md:flex-row min-h-screen">
+    
+    <!-- Sidebar Navigation -->
+    <aside class="w-full md:w-72 bg-white border-r border-slate-200 md:h-screen md:sticky top-0 p-6 overflow-y-auto shrink-0 z-20 shadow-lg md:shadow-none">
+      
+      <!-- BACK BUTTON -->
+      <button onclick="switchView('tech-plan-view')" class="w-full flex items-center justify-center gap-2 px-4 py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl transition mb-8 shadow-sm hover:shadow-md">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg> Back to Tech Plan
+      </button>
+
+      <div class="mb-8">
+        <div class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Document V1.0</div>
+        <h1 class="text-2xl font-extrabold text-slate-900 leading-tight">Software Requirement Spec.</h1>
+        <p class="text-sm text-slate-500 mt-2">NE Brothers & MAKU Security</p>
+      </div>
+      
+      <nav class="space-y-6">
+        <div>
+          <h3 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-3">1. Employee Mobile App</h3>
+          <ul class="space-y-2 text-sm font-medium">
+            <li><a href="#mob-auth" class="nav-link block text-slate-600">1.1 Auth & Module Selection</a></li>
+            <li><a href="#mob-duty" class="nav-link block text-slate-600">1.2 Duty Check-In/Out</a></li>
+            <li><a href="#mob-shifts" class="nav-link block text-slate-600">1.3 View Assigned Shifts</a></li>
+            <li><a href="#mob-incident" class="nav-link block text-slate-600">1.4 Incident Reporting</a></li>
+            <li><a href="#mob-sos" class="nav-link block text-slate-600">1.5 Emergency SOS</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-3">2. Employee Web Portal</h3>
+          <ul class="space-y-2 text-sm font-medium">
+            <li><a href="#empweb-auth" class="nav-link block text-slate-600">2.1 Browser Authentication</a></li>
+            <li><a href="#empweb-duty" class="nav-link block text-slate-600">2.2 Web-based Check-In</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-3">3. Admin Web Panel</h3>
+          <ul class="space-y-2 text-sm font-medium">
+            <li><a href="#admin-dash" class="nav-link block text-slate-600">3.1 Master Dashboard</a></li>
+            <li><a href="#admin-manage" class="nav-link block text-slate-600">3.2 Entity Management</a></li>
+            <li><a href="#admin-shifts" class="nav-link block text-slate-600">3.3 Shift Allocation</a></li>
+            <li><a href="#admin-reports" class="nav-link block text-slate-600">3.4 PDF Report Generation</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-3">4. Client Web Panel</h3>
+          <ul class="space-y-2 text-sm font-medium">
+            <li><a href="#client-dash" class="nav-link block text-slate-600">4.1 Traffic Light Dashboard</a></li>
+            <li><a href="#client-incident" class="nav-link block text-slate-600">4.2 Site Incident Viewer</a></li>
+          </ul>
+        </div>
+      </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-1 p-6 md:p-12 lg:p-16 overflow-y-auto w-full max-w-5xl mx-auto">
+      
+      <div class="mb-12 border-b border-slate-200 pb-8 mt-4 md:mt-0">
+        <h2 class="text-3xl font-bold text-slate-900 mb-4">Introduction & Architecture Context</h2>
+        <p class="text-slate-600 leading-relaxed">
+          This document outlines the operational behavior, user interactions, technical requirements, implementation logic, and data flows for the Phase 1 MVP. The system utilizes a <strong>Flutter</strong> mobile app communicating via REST API to a <strong>Laravel</strong> backend hosted on <strong>AWS EC2</strong>. Data is stored in <strong>AWS RDS (PostgreSQL)</strong>, and media is stored in <strong>Amazon S3</strong>. Web interfaces are server-rendered using <strong>Laravel Blade</strong>.
+        </p>
+      </div>
+
+      <!-- ========================================== -->
+      <!-- SECTION 1: EMPLOYEE MOBILE APP             -->
+      <!-- ========================================== -->
+      <section id="section-1" class="mb-16">
+        <div class="flex items-center gap-4 mb-8">
+          <div class="w-12 h-12 rounded-xl bg-blue-600 text-white flex items-center justify-center text-xl shadow-lg">1</div>
+          <h2 class="text-3xl font-extrabold text-slate-900">Employee Mobile App (Android)</h2>
+        </div>
+
+        <!-- Feature 1.1 -->
+        <div id="mob-auth" class="feature-card">
+          <div class="feature-header bg-blue-50 text-blue-900">
+            1.1 Authentication & Module Selection
+            <span class="badge role-mobile ml-auto">Flutter / API</span>
+          </div>
+          <div class="feature-body space-y-6">
+            <div><h4 class="font-bold text-slate-800 mb-1">1. Operational Behavior</h4><p class="text-sm">The app displays a splash screen, asks the user to select their division (NE Brothers or MAKU Security) for branding purposes, and presents a login form. Upon success, it establishes a persistent secure session.</p></div>
+            <div><h4 class="font-bold text-slate-800 mb-1">2. User Interaction</h4><p class="text-sm">User taps company logo -> Enters Phone/Email & Password -> Taps 'Login' -> Re-directed to Employee Dashboard.</p></div>
+            <div><h4 class="font-bold text-slate-800 mb-1">3. Requirements</h4><ul class="list-disc pl-5 text-sm space-y-1"><li>Internet connection.</li><li>Valid credentials assigned by Admin.</li></ul></div>
+            <div><h4 class="font-bold text-slate-800 mb-1">4. Implementation Strategy</h4><p class="text-sm">Flutter captures credentials, POSTs to Laravel `/api/login`. Laravel validates against RDS, issues a Sanctum Personal Access Token (JWT), and returns it. Flutter stores the token in SecureStorage.</p></div>
+            <div>
+              <h4 class="font-bold text-slate-800 mb-2">5. Data Flow</h4>
+              <div class="data-flow-box flex items-center">
+                [User Input] <span class="flow-arrow">→</span> [Flutter POST /api/login] <span class="flow-arrow">→</span> [Laravel Controller] <span class="flow-arrow">→</span> [AWS RDS Auth Check] <span class="flow-arrow">→</span> [Laravel Issues Sanctum Token] <span class="flow-arrow">→</span> [Flutter SecureStorage]
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Feature 1.2 -->
+        <div id="mob-duty" class="feature-card">
+          <div class="feature-header bg-blue-50 text-blue-900">
+            1.2 Duty Check-In/Out (GPS + Selfie)
+            <span class="badge role-mobile ml-auto">Flutter / API</span>
+          </div>
+          <div class="feature-body space-y-6">
+            <div><h4 class="font-bold text-slate-800 mb-1">1. Operational Behavior</h4><p class="text-sm">The core proof-of-presence mechanism. Prevents check-in if GPS or Camera access is denied. Calculates distance from assigned site coordinates (if required, or simply logs raw coordinates for Admin review).</p></div>
+            <div><h4 class="font-bold text-slate-800 mb-1">2. User Interaction</h4><p class="text-sm">User taps 'Start Duty' -> App requests Location/Camera permissions -> User takes a selfie -> App verifies location -> Data is uploaded -> Screen shows 'Duty Active'. Same flow for 'End Duty' (without selfie, just timestamp & GPS).</p></div>
+            <div><h4 class="font-bold text-slate-800 mb-1">3. Requirements</h4><ul class="list-disc pl-5 text-sm space-y-1"><li>Hardware GPS and Front-facing Camera.</li><li>OS-level permissions granted.</li><li>Active shift assigned in the database.</li></ul></div>
+            <div><h4 class="font-bold text-slate-800 mb-1">4. Implementation Strategy</h4><p class="text-sm">Flutter uses `geolocator` and `image_picker`. Image is compressed via `flutter_image_compress` (target < 500kb). Multipart/form-data POST to `/api/attendance/check-in` containing {shift_id, lat, lng, image_file}. Laravel uses AWS SDK to stream file to S3, retrieves S3 URL, and writes attendance record to PostgreSQL RDS.</p></div>
+            <div>
+              <h4 class="font-bold text-slate-800 mb-2">5. Data Flow</h4>
+              <div class="data-flow-box flex items-center">
+                [Device GPS & Camera] <span class="flow-arrow">→</span> [Flutter Compression] <span class="flow-arrow">→</span> [POST + Bearer Token] <span class="flow-arrow">→</span> [Laravel] <span class="flow-arrow">→</span> [Upload to AWS S3] <span class="flow-arrow">→</span> [Save URL+Coords to AWS RDS]
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Feature 1.3 -->
+        <div id="mob-shifts" class="feature-card">
+          <div class="feature-header bg-blue-50 text-blue-900">
+            1.3 View Assigned Shifts
+            <span class="badge role-mobile ml-auto">Flutter / API</span>
+          </div>
+          <div class="feature-body space-y-6">
+            <div><h4 class="font-bold text-slate-800 mb-1">1. Operational Behavior</h4><p class="text-sm">Displays a list or calendar view of the employee's upcoming shifts, including site name, address, reporting time, and client contact.</p></div>
+            <div><h4 class="font-bold text-slate-800 mb-1">2. User Interaction</h4><p class="text-sm">User navigates to the 'My Shifts' tab. Taps a specific shift to view site address. Can tap the address to open native Google Maps.</p></div>
+            <div><h4 class="font-bold text-slate-800 mb-1">3. Requirements</h4><ul class="list-disc pl-5 text-sm space-y-1"><li>Valid API Token.</li></ul></div>
+            <div><h4 class="font-bold text-slate-800 mb-1">4. Implementation Strategy</h4><p class="text-sm">Flutter sends GET `/api/shifts/me`. Laravel fetches upcoming shifts from RDS where `user_id = auth()->id()`. Maps integration is done by passing coordinates to the `url_launcher` package (e.g., `google.navigation:q=lat,lng`), avoiding Google Maps API costs.</p></div>
+            <div>
+              <h4 class="font-bold text-slate-800 mb-2">5. Data Flow</h4>
+              <div class="data-flow-box flex items-center">
+                [Flutter GET /shifts] <span class="flow-arrow">→</span> [Laravel API] <span class="flow-arrow">→</span> [RDS Query] <span class="flow-arrow">→</span> [JSON Response] <span class="flow-arrow">→</span> [Flutter UI Render] <span class="flow-arrow">→</span> (Optional) [OS Native Map App]
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Feature 1.4 -->
+        <div id="mob-incident" class="feature-card">
+          <div class="feature-header bg-blue-50 text-blue-900">
+            1.4 Incident Reporting
+            <span class="badge role-mobile ml-auto">Flutter / API</span>
+          </div>
+          <div class="feature-body space-y-6">
+            <div><h4 class="font-bold text-slate-800 mb-1">1. Operational Behavior</h4><p class="text-sm">Allows guards/workforce to log anomalies (theft, damage, absence, unauthorized entry) directly linked to their current site and shift.</p></div>
+            <div><h4 class="font-bold text-slate-800 mb-1">2. User Interaction</h4><p class="text-sm">User taps 'Report Incident' -> Selects Category (dropdown) -> Types Description -> Attaches Photo (optional) -> Submits.</p></div>
+            <div><h4 class="font-bold text-slate-800 mb-1">3. Requirements</h4><ul class="list-disc pl-5 text-sm space-y-1"><li>Camera permission.</li></ul></div>
+            <div><h4 class="font-bold text-slate-800 mb-1">4. Implementation Strategy</h4><p class="text-sm">Similar payload to Check-In. POST `/api/incidents`. Laravel stores the image in S3 (`/incidents/{date}/file.jpg`) and creates a database record tied to `shift_id` and `site_id` so Clients can view it later.</p></div>
+            <div>
+              <h4 class="font-bold text-slate-800 mb-2">5. Data Flow</h4>
+              <div class="data-flow-box flex items-center">
+                [User Form Data + Photo] <span class="flow-arrow">→</span> [Flutter POST] <span class="flow-arrow">→</span> [Laravel] <span class="flow-arrow">→</span> [AWS S3 (Image)] & [AWS RDS (Text)] <span class="flow-arrow">→</span> [Admin/Client Real-time View]
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Feature 1.5 -->
+        <div id="mob-sos" class="feature-card">
+          <div class="feature-header bg-blue-50 text-blue-900">
+            1.5 Emergency SOS Alert
+            <span class="badge role-mobile ml-auto">Flutter / API</span>
+          </div>
+          <div class="feature-body space-y-6">
+            <div><h4 class="font-bold text-slate-800 mb-1">1. Operational Behavior</h4><p class="text-sm">A highly visible panic button that overrides normal reporting and immediately alerts the Admin panel with the user's last known exact GPS location.</p></div>
+            <div><h4 class="font-bold text-slate-800 mb-1">2. User Interaction</h4><p class="text-sm">User presses and holds 'SOS' button for 3 seconds (to prevent accidental triggers) -> Screen flashes red -> Request sent.</p></div>
+            <div><h4 class="font-bold text-slate-800 mb-1">3. Requirements</h4><ul class="list-disc pl-5 text-sm space-y-1"><li>Immediate GPS access.</li></ul></div>
+            <div><h4 class="font-bold text-slate-800 mb-1">4. Implementation Strategy</h4><p class="text-sm">POST `/api/sos`. Laravel writes a high-priority record to the `incidents` table. (In Phase 2, this would trigger an SMS. For Phase 1 MVP, it creates a flashing visual alert on the Admin Web Dashboard via polling).</p></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================== -->
+      <!-- SECTION 2: EMPLOYEE WEB PORTAL             -->
+      <!-- ========================================== -->
+      <section id="section-2" class="mb-16">
+        <div class="flex items-center gap-4 mb-8">
+          <div class="w-12 h-12 rounded-xl bg-emerald-600 text-white flex items-center justify-center text-xl shadow-lg">2</div>
+          <h2 class="text-3xl font-extrabold text-slate-900">Employee Web Portal (Browser)</h2>
+        </div>
+
+        <!-- Feature 2.1 -->
+        <div id="empweb-auth" class="feature-card">
+          <div class="feature-header bg-emerald-50 text-emerald-900">
+            2.1 Browser Authentication
+            <span class="badge role-web ml-auto">Laravel Blade</span>
+          </div>
+          <div class="feature-body space-y-6">
+            <div><h4 class="font-bold text-slate-800 mb-1">1. Operational Behavior</h4><p class="text-sm">A fallback access point for employees whose Android devices are broken, lost, or incompatible. Accessible via a standard web URL.</p></div>
+            <div><h4 class="font-bold text-slate-800 mb-1">2. User Interaction</h4><p class="text-sm">User visits `app.company.com/employee` on their mobile browser (Chrome/Safari) -> Logs in -> Accesses mobile-optimized HTML interface.</p></div>
+            <div><h4 class="font-bold text-slate-800 mb-1">3. Requirements</h4><ul class="list-disc pl-5 text-sm space-y-1"><li>Web Browser.</li></ul></div>
+            <div><h4 class="font-bold text-slate-800 mb-1">4. Implementation Strategy</h4><p class="text-sm">Standard Laravel session-based authentication (Laravel Breeze/Fortify). No API tokens needed here. Uses HTTP-only cookies.</p></div>
+          </div>
+        </div>
+
+        <!-- Feature 2.2 -->
+        <div id="empweb-duty" class="feature-card">
+          <div class="feature-header bg-emerald-50 text-emerald-900">
+            2.2 Web-Based Duty Check-In (Geo/Cam)
+            <span class="badge role-web ml-auto">HTML5 / JS / Laravel</span>
+          </div>
+          <div class="feature-body space-y-6">
+            <div><h4 class="font-bold text-slate-800 mb-1">1. Operational Behavior</h4><p class="text-sm">Replicates the Flutter app's check-in functionality using native browser APIs, ensuring proof of presence is still collected.</p></div>
+            <div><h4 class="font-bold text-slate-800 mb-1">2. User Interaction</h4><p class="text-sm">User taps 'Check In' -> Browser prompts "Allow Location?" -> Browser prompts "Allow Camera?" -> User takes photo using HTML `<video>` element -> Submits.</p></div>
+            <div><h4 class="font-bold text-slate-800 mb-1">3. Requirements</h4><ul class="list-disc pl-5 text-sm space-y-1"><li>Browser permissions for `navigator.geolocation` and `navigator.mediaDevices.getUserMedia`.</li><li>HTTPS connection (required by browsers to allow camera/GPS access).</li></ul></div>
+            <div><h4 class="font-bold text-slate-800 mb-1">4. Implementation Strategy</h4><p class="text-sm">JavaScript extracts Lat/Lng. JS captures a frame from the video stream, converts it to a Base64 string or Blob, appends it to a hidden form field, and submits a standard POST request to a Laravel Controller. Controller handles it identically to the API request.</p></div>
+            <div>
+              <h4 class="font-bold text-slate-800 mb-2">5. Data Flow</h4>
+              <div class="data-flow-box flex items-center">
+                [HTML5 Geo/Media API] <span class="flow-arrow">→</span> [JS Blob Creation] <span class="flow-arrow">→</span> [Laravel HTTP POST] <span class="flow-arrow">→</span> [AWS S3 & RDS]
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================== -->
+      <!-- SECTION 3: ADMIN WEB PANEL                 -->
+      <!-- ========================================== -->
+      <section id="section-3" class="mb-16">
+        <div class="flex items-center gap-4 mb-8">
+          <div class="w-12 h-12 rounded-xl bg-purple-600 text-white flex items-center justify-center text-xl shadow-lg">3</div>
+          <h2 class="text-3xl font-extrabold text-slate-900">Admin Web Panel</h2>
+        </div>
+
+        <!-- Feature 3.1 -->
+        <div id="admin-dash" class="feature-card">
+          <div class="feature-header bg-purple-50 text-purple-900">
+            3.1 Master Dashboard & Attendance Monitor
+            <span class="badge role-admin ml-auto">Laravel Blade</span>
+          </div>
+          <div class="feature-body space-y-6">
+            <div><h4 class="font-bold text-slate-800 mb-1">1. Operational Behavior</h4><p class="text-sm">The command center for operations managers. Shows a high-level view of all active shifts, missing personnel, and recent incidents across all clients.</p></div>
+            <div><h4 class="font-bold text-slate-800 mb-1">2. User Interaction</h4><p class="text-sm">Admin logs in. The default view shows large statistic cards (Total Guards, On Duty, Absent) and a data table of today's attendance logs with click-to-view selfie links.</p></div>
+            <div><h4 class="font-bold text-slate-800 mb-1">3. Requirements</h4><ul class="list-disc pl-5 text-sm space-y-1"><li>Admin Role permission in DB.</li></ul></div>
+            <div><h4 class="font-bold text-slate-800 mb-1">4. Implementation Strategy</h4><p class="text-sm">Laravel queries RDS `attendance` table joined with `users` and `sites` where `date = today()`. Uses a `<meta http-equiv="refresh" content="60">` or simple JS polling to refresh the dashboard every 60 seconds without complex WebSockets (saving AWS compute).</p></div>
+          </div>
+        </div>
+
+        <!-- Feature 3.2 -->
+        <div id="admin-manage" class="feature-card">
+          <div class="feature-header bg-purple-50 text-purple-900">
+            3.2 Entity Management (Users, Clients, Sites)
+            <span class="badge role-admin ml-auto">Laravel Blade</span>
+          </div>
+          <div class="feature-body space-y-6">
+            <div><h4 class="font-bold text-slate-800 mb-1">1. Operational Behavior</h4><p class="text-sm">Standard CRUD (Create, Read, Update, Delete) interfaces to manage the backbone data of the system.</p></div>
+            <div><h4 class="font-bold text-slate-800 mb-1">2. User Interaction</h4><p class="text-sm">Admin clicks "Clients" -> "Add New". Fills out company name, contact info, and assigns a login password for the client. Admin clicks "Sites" -> Adds location details linked to that Client.</p></div>
+            <div><h4 class="font-bold text-slate-800 mb-1">3. Requirements</h4><ul class="list-disc pl-5 text-sm space-y-1"><li>Relational integrity (Cannot delete a Client if Sites exist).</li></ul></div>
+            <div><h4 class="font-bold text-slate-800 mb-1">4. Implementation Strategy</h4><p class="text-sm">Laravel Eloquent ORM handles relationships (`Client hasMany Sites`, `Site hasMany Shifts`). Blade templates render HTML forms. Laravel handles validation rules (e.g., unique email) before saving to RDS.</p></div>
+            <div>
+              <h4 class="font-bold text-slate-800 mb-2">5. Data Flow</h4>
+              <div class="data-flow-box flex items-center">
+                [Admin HTML Form] <span class="flow-arrow">→</span> [Laravel Controller Validation] <span class="flow-arrow">→</span> [Eloquent ORM] <span class="flow-arrow">→</span> [AWS RDS INSERT/UPDATE]
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Feature 3.3 -->
+        <div id="admin-shifts" class="feature-card">
+          <div class="feature-header bg-purple-50 text-purple-900">
+            3.3 Shift Allocation
+            <span class="badge role-admin ml-auto">Laravel Blade</span>
+          </div>
+          <div class="feature-body space-y-6">
+            <div><h4 class="font-bold text-slate-800 mb-1">1. Operational Behavior</h4><p class="text-sm">Allows assigning guards to specific sites for specific dates and times, which populate the mobile app's "My Shifts" view.</p></div>
+            <div><h4 class="font-bold text-slate-800 mb-1">2. User Interaction</h4><p class="text-sm">Admin selects Employee -> Selects Site -> Sets Start/End Time and Date -> Submits.</p></div>
+            <div><h4 class="font-bold text-slate-800 mb-1">3. Requirements</h4><ul class="list-disc pl-5 text-sm space-y-1"><li>Employee must be active.</li></ul></div>
+            <div><h4 class="font-bold text-slate-800 mb-1">4. Implementation Strategy</h4><p class="text-sm">Laravel form inserts records into the `shifts` table linked by `user_id` and `site_id`.</p></div>
+          </div>
+        </div>
+
+        <!-- Feature 3.4 -->
+        <div id="admin-reports" class="feature-card">
+          <div class="feature-header bg-purple-50 text-purple-900">
+            3.4 Daily Report Generation (PDF)
+            <span class="badge role-admin ml-auto">Laravel / Snappy</span>
+          </div>
+          <div class="feature-body space-y-6">
+            <div><h4 class="font-bold text-slate-800 mb-1">1. Operational Behavior</h4><p class="text-sm">Compiles a full day of activity for a specific site into a branded, printable PDF document containing shift timings, selfies, and incident notes.</p></div>
+            <div><h4 class="font-bold text-slate-800 mb-1">2. User Interaction</h4><p class="text-sm">Admin selects a Client -> Selects a Site -> Selects a Date -> Clicks "Generate Report". A PDF is downloaded to their local machine.</p></div>
+            <div><h4 class="font-bold text-slate-800 mb-1">3. Requirements</h4><ul class="list-disc pl-5 text-sm space-y-1"><li>Server-side PDF rendering engine.</li></ul></div>
+            <div><h4 class="font-bold text-slate-800 mb-1">4. Implementation Strategy</h4><p class="text-sm">Laravel retrieves all data for the requested parameters. A special Blade template (HTML/CSS) is designed specifically for print format. Laravel passes this HTML to the `barryvdh/laravel-snappy` (wrapper for wkhtmltopdf) or `dompdf` package, which converts the HTML+Images into a downloadable PDF stream.</p></div>
+            <div>
+              <h4 class="font-bold text-slate-800 mb-2">5. Data Flow</h4>
+              <div class="data-flow-box flex items-center">
+                [Request Params] <span class="flow-arrow">→</span> [Fetch RDS Data & S3 Images] <span class="flow-arrow">→</span> [Compile Blade HTML] <span class="flow-arrow">→</span> [Snappy/DomPDF Engine] <span class="flow-arrow">→</span> [PDF Stream to Browser]
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================== -->
+      <!-- SECTION 4: CLIENT WEB PANEL                -->
+      <!-- ========================================== -->
+      <section id="section-4" class="mb-16">
+        <div class="flex items-center gap-4 mb-8">
+          <div class="w-12 h-12 rounded-xl bg-orange-600 text-white flex items-center justify-center text-xl shadow-lg">4</div>
+          <h2 class="text-3xl font-extrabold text-slate-900">Client Web Panel</h2>
+        </div>
+
+        <!-- Feature 4.1 -->
+        <div id="client-dash" class="feature-card">
+          <div class="feature-header bg-orange-50 text-orange-900">
+            4.1 Traffic Light Dashboard (Restricted)
+            <span class="badge role-client ml-auto">Laravel Blade</span>
+          </div>
+          <div class="feature-body space-y-6">
+            <div><h4 class="font-bold text-slate-800 mb-1">1. Operational Behavior</h4><p class="text-sm">A highly restricted, read-only view. Clients can only see data belonging to their specific `client_id`. Gives them peace of mind via the "Traffic Light" visual system.</p></div>
+            <div><h4 class="font-bold text-slate-800 mb-1">2. User Interaction</h4><p class="text-sm">Client logs in. Dashboard shows a list of assigned guards for today. Green indicator = On Duty. Yellow = Late. Red = Absent/Issue.</p></div>
+            <div><h4 class="font-bold text-slate-800 mb-1">3. Requirements</h4><ul class="list-disc pl-5 text-sm space-y-1"><li>Strict multi-tenant security logic to prevent data leaks between different clients.</li></ul></div>
+            <div><h4 class="font-bold text-slate-800 mb-1">4. Implementation Strategy</h4><p class="text-sm">Laravel Global Scopes are applied to the `Client` role. E.g., `Shift::where('client_id', auth()->user()->client_id)`. The Traffic Light logic is handled by Laravel Accessors: comparing `shift.start_time` vs `attendance.check_in_time`.</p></div>
+          </div>
+        </div>
+
+        <!-- Feature 4.2 -->
+        <div id="client-incident" class="feature-card">
+          <div class="feature-header bg-orange-50 text-orange-900">
+            4.2 Site Incident Viewer & Report Access
+            <span class="badge role-client ml-auto">Laravel Blade</span>
+          </div>
+          <div class="feature-body space-y-6">
+            <div><h4 class="font-bold text-slate-800 mb-1">1. Operational Behavior</h4><p class="text-sm">Allows the client to view anomalies reported by guards on their property, and download the exact same daily PDF reports that the Admin generates.</p></div>
+            <div><h4 class="font-bold text-slate-800 mb-1">2. User Interaction</h4><p class="text-sm">Client navigates to "Incidents" tab to see a feed of photos and notes. Navigates to "Reports" tab to click "Download PDF" for yesterday's shift.</p></div>
+            <div><h4 class="font-bold text-slate-800 mb-1">3. Requirements</h4><ul class="list-disc pl-5 text-sm space-y-1"><li>S3 URLs must be accessible to the browser to render images.</li></ul></div>
+            <div><h4 class="font-bold text-slate-800 mb-1">4. Implementation Strategy</h4><p class="text-sm">To prevent hotlinking, images uploaded to S3 can be set as private, and Laravel generates temporary signed URLs valid for 60 minutes when rendering the Blade view. PDF generation uses the same Snappy logic as the Admin panel, but hard-codes the `client_id` parameter to the logged-in user.</p></div>
+            <div>
+              <h4 class="font-bold text-slate-800 mb-2">5. Data Flow</h4>
+              <div class="data-flow-box flex items-center">
+                [Client Request PDF] <span class="flow-arrow">→</span> [Laravel checks Client ID scope] <span class="flow-arrow">→</span> [Generate PDF via DomPDF] <span class="flow-arrow">→</span> [Download to Client Device]
+              </div>
+            </div>
+          </div>
+        </div>
+
       </section>
     </main>
   </div>
