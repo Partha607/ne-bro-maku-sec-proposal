@@ -38,8 +38,31 @@
             grid-template-columns: 1fr;
             margin: 0;
             min-height: 100vh;
-            padding: 40px 0;
+            padding: 80px 20px 40px;
             place-items: center;
+        }
+
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: rgba(11, 15, 25, 0.8);
+            backdrop-filter: blur(5px);
+            border: 1px solid var(--accent-cyan);
+            color: var(--text-main);
+            padding: 10px 20px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+        .back-btn:hover {
+            background: var(--accent-cyan);
+            color: var(--bg-dark);
         }
 
         .slide-container {
@@ -50,12 +73,14 @@
             display: flex;
             flex-direction: column;
             font-family: 'Plus Jakarta Sans', sans-serif;
-            height: 720px;
+            height: auto;
+            min-height: 720px;
             justify-content: center;
             overflow: hidden;
             padding: 60px;
             position: relative;
-            width: 1280px;
+            width: 100%;
+            max-width: 1280px;
             border: 1px solid rgba(255,255,255,0.05);
         }
 
@@ -434,9 +459,68 @@
             display: inline-block;
         }
 
+        /* Mobile Responsiveness */
+        @media (max-width: 1200px) {
+            .slide-container { min-height: auto; }
+            .slide-container.bleed-image-layout img.bleed-image-side { height: 100%; }
+        }
+
+        @media (max-width: 1024px) {
+            .slide-container {
+                width: 100%;
+                height: auto;
+                min-height: 70vh;
+                padding: 40px;
+            }
+            .slide-container.bleed-image-layout {
+                grid-template-columns: 1fr;
+            }
+            .slide-container.bleed-image-layout > .content-container {
+                padding: 40px;
+            }
+            .slide-container.bleed-image-layout img.bleed-image-side {
+                border-radius: 0 0 16px 16px;
+                height: 300px;
+            }
+            .image-container::after {
+                background: linear-gradient(180deg, var(--bg-dark) 0%, transparent 40%);
+            }
+            .slide-container h1 { font-size: 40px; }
+            .section-title-layout h2 { font-size: 40px; }
+            .slide-container .slide-title { font-size: 28px; }
+            .table-layout { overflow-x: auto; width: 100%; }
+            .table-layout table { min-width: 700px; }
+            .total-block { padding: 20px; }
+            .huge-number { font-size: 48px; }
+            .srs-grid { grid-template-columns: 1fr; }
+            .qa-layout h2 { font-size: 48px; }
+            .qa-layout p { font-size: 18px; }
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 70px 15px 40px;
+            }
+            .slide-container {
+                padding: 30px 20px;
+                border-radius: 12px;
+            }
+            .slide-container.bleed-image-layout > .content-container {
+                padding: 30px 20px;
+            }
+            .slide-container h1 { font-size: 32px; }
+            .slide-container p, .slide-container td, .slide-container .subtitle { font-size: 15px; }
+            .full-bg-image .content-overlay { padding: 30px 20px; }
+            .section-title-layout p { font-size: 18px; }
+            .back-btn { top: 10px; left: 10px; padding: 8px 15px; font-size: 14px; }
+        }
     </style>
 </head>
 <body>
+
+    <a href="https://partha607.github.io/ne-bro-maku-sec-proposal/" class="back-btn">
+        <i class="fa-solid fa-arrow-left"></i> Back to Home
+    </a>
 
     <!-- SLIDE 1: TITLE -->
     <div class="slide-container full-bg-image" id="slide1" style="background-image: url('http://googleusercontent.com/image_collection/image_retrieval/7132505336920910991');">
